@@ -1,17 +1,13 @@
 import Background from './components/Background'
-import Hero from './components/Hero'
-import FlightPath from './components/FlightPath'
+import Journey from './components/Journey'
 import Projects from './components/Projects'
-import Globe from './components/Globe'
 
 function App() {
   return (
     <>
     <Background />
-    <Globe />
     <main>
-      <Hero />
-      <FlightPath />
+      <Journey />
       <Projects />
     </main>
   </>

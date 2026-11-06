@@ -123,9 +123,7 @@ main {
 /* ---------- Hero ---------- */
 
 .hero {
-  position: relative;
-  overflow: hidden;
-  min-height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,13 +156,8 @@ main {
 }
 
 .globe {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 0;
-  width: min(900px, 130vw);
+  width: min(800px, 110vw);
   aspect-ratio: 1;
-  translate: -50% -50%;
   opacity: 0;
   transition: opacity 1.2s ease;
   pointer-events: none;
@@ -331,6 +324,112 @@ main {
   background: var(--ink);
   color: var(--accent);
 }
+/* ---------- Journey (pinned scroll scene) ---------- */
+
+.journey {
+  position: relative;
+}
+
+.journey-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.journey-globe {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.journey-pass {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+.journey-plane {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  fill: var(--paper);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.35)) drop-shadow(0 8px 12px rgba(0, 0, 0, 0.7));
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+/* ---------- Landing panels ---------- */
+
+.landing {
+  position: absolute;
+  top: 50%;
+  right: max(16px, 6vw);
+  z-index: 2;
+  width: min(440px, calc(100vw - 32px));
+  translate: 0 -50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 14px;
+  background: rgba(20, 20, 22, 0.85);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.landing-arrived {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.landing-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.landing-name {
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.landing-desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .landing {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    width: auto;
+    translate: none;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}
 
 /* ---------- Sections ---------- */
 
@@ -373,6 +472,15 @@ main {
   background: var(--surface);
   border: 1px solid var(--border);
   transition: transform 0.25s, border-color 0.25s;
+}
+
+.ticket-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
 }
 
 .ticket:hover {

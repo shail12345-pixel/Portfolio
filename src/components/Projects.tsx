@@ -9,6 +9,14 @@ function Projects() {
       <div className="project-grid">
         {projects.map((project) => (
           <article className="ticket" key={project.name}>
+            {project.image && (
+             <img
+               className="ticket-image"
+               src={project.image}
+               alt={`Screenshot of ${project.name}`}
+              loading="lazy"
+             />
+        )}
             <div className="ticket-top">
               <span className="ticket-tag">{project.tag}</span>
               <span className="ticket-status">{project.status}</span>

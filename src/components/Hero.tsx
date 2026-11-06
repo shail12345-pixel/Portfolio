@@ -33,7 +33,7 @@ function Hero() {
   }
 
   return (
-    <section className="hero">
+    <div className="hero">
       
       <div
         className="pass"
@@ -85,7 +85,7 @@ function Hero() {
           <a href="mailto:sahil.indoria@gmail.com">Email</a>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
