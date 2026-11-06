@@ -1,0 +1,213 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --sky-top: #0b1026;
+  --sky-bottom: #2b1a4a;
+  --sunset-1: #ff7a59;
+  --sunset-2: #ff4f8b;
+  --sunset-3: #8b5cf6;
+  --paper: #fdf8f0;
+  --ink: #1a1a2e;
+  --muted: #6b6b80;
+  --line: #d8cfc0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  color: var(--paper);
+  min-height: 100vh;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.pass {
+  display: flex;
+  width: 100%;
+  max-width: 760px;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  animation: pass-in 0.8s ease-out both;
+}
+
+.pass-main {
+  flex: 1;
+  padding: 32px;
+}
+
+.pass-label {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sunset-1), var(--sunset-2), var(--sunset-3));
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.pass-name {
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 1.05;
+  margin-top: 16px;
+}
+
+.pass-intro {
+  color: var(--muted);
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+.pass-route {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.pass-city {
+  display: flex;
+  flex-direction: column;
+}
+
+.pass-city-end {
+  text-align: right;
+}
+
+.pass-code {
+  font-size: 40px;
+  font-weight: 800;
+}
+
+.pass-small {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.pass-flight {
+  flex: 1;
+  position: relative;
+  border-top: 2px dashed var(--line);
+}
+
+.pass-plane {
+  position: absolute;
+  top: -15px;
+  font-size: 22px;
+  color: var(--sunset-2);
+  animation: fly 4s ease-in-out infinite;
+}
+
+.pass-details {
+  display: flex;
+  gap: 32px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.pass-details > div {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
+
+.pass-stub {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  border-left: 2px dashed var(--line);
+  background: linear-gradient(160deg, var(--sunset-1), var(--sunset-2), var(--sunset-3));
+}
+
+.pass-stub a {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 14px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.pass-stub a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes pass-in {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotate(-2deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fly {
+  0% { left: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: calc(100% - 24px); opacity: 0; }
+}
+
+/* ---------- Phones ---------- */
+
+@media (max-width: 640px) {
+  .pass {
+    flex-direction: column;
+  }
+
+  .pass-main {
+    padding: 24px;
+  }
+
+  .pass-code {
+    font-size: 30px;
+  }
+
+  .pass-stub {
+    width: auto;
+    flex-direction: row;
+    border-left: none;
+    border-top: 2px dashed var(--line);
+  }
+
+  .pass-stub a {
+    flex: 1;
+  }
+}
+
+/* Turn off motion for people who set that in their system settings */
+@media (prefers-reduced-motion: reduce) {
+  .pass,
+  .pass-plane {
+    animation: none;
+  }
+}

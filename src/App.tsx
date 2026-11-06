@@ -1,8 +1,9 @@
+import Hero from './components/Hero'
+
 function App() {
   return (
     <main>
-      <h1>Sahil Indoria</h1>
-      <p>Coming soon.</p>
+      <Hero />
     </main>
   )
 }
