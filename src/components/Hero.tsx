@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import type { MouseEvent } from 'react'
 
+
 function Hero() {
   const passRef = useRef<HTMLDivElement>(null)
 
@@ -33,6 +34,7 @@ function Hero() {
 
   return (
     <section className="hero">
+      
       <div
         className="pass"
         ref={passRef}

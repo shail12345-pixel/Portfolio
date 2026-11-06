@@ -53,8 +53,13 @@ function FlightPath() {
         <path ref={routeRef} className="flight-route" d={ROUTE} />
         <path ref={trailRef} className="flight-trail" d={ROUTE} />
         <g ref={planeRef}>
-          <path className="flight-plane" d="M 16 0 L -12 -11 L -6 0 L -12 11 Z" />
-        </g>
+        <g transform="scale(1.4)">
+        <path
+          className="flight-plane"
+          d="M 20 0 C 20 -1.5 18 -2.5 15 -2.5 L 4 -2.5 L -6 -18 L -10 -18 L -4 -2.5 L -13 -2.5 L -17 -8 L -19.5 -8 L -17.5 -2 L -19 -1 L -19 1 L -17.5 2 L -19.5 8 L -17 8 L -13 2.5 L -4 2.5 L -10 18 L -6 18 L 4 2.5 L 15 2.5 C 18 2.5 20 1.5 20 0 Z"
+    />
+  </g>
+</g>
       </svg>
     </div>
   )
