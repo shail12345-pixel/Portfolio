@@ -513,3 +513,37 @@ main {
     animation: none;
   }
 }
+
+/* ---------- Flight path ---------- */
+
+.flight {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.flight-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.flight-route {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-width: 2;
+  stroke-dasharray: 6 10;
+}
+
+.flight-trail {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.flight-plane {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 8px rgba(255, 90, 31, 0.6));
+}
