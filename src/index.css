@@ -29,11 +29,6 @@ body {
   font-family: var(--font-sans);
   color: var(--text);
   background-color: var(--bg);
-  background-image:
-    radial-gradient(circle at 50% -10%, rgba(255, 90, 31, 0.18), transparent 50%),
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 100% 100%, 48px 48px, 48px 48px;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
@@ -54,6 +49,77 @@ body::before {
   color: var(--ink);
 }
 
+/* ---------- Background ---------- */
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.09) 1px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+
+.bg-lit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  background-image:
+    radial-gradient(circle, var(--accent) 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(255, 90, 31, 0.12), transparent 60%);
+  background-size: 28px 28px, 100% 100%;
+  -webkit-mask-image: radial-gradient(circle, black 0%, transparent 70%);
+  mask-image: radial-gradient(circle, black 0%, transparent 70%);
+  will-change: transform;
+}
+
+.bg-blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+}
+
+.bg-blob-1 {
+  top: -200px;
+  left: -150px;
+  background: var(--accent);
+  opacity: 0.16;
+  animation: drift-1 22s ease-in-out infinite alternate;
+}
+
+.bg-blob-2 {
+  bottom: -250px;
+  right: -200px;
+  background: #ffb347;
+  opacity: 0.1;
+  animation: drift-2 28s ease-in-out infinite alternate;
+}
+
+@keyframes drift-1 {
+  to { transform: translate(300px, 200px) scale(1.2); }
+}
+
+@keyframes drift-2 {
+  to { transform: translate(-250px, -150px) scale(1.1); }
+}
+
+
 /* ---------- Hero ---------- */
 
 .hero {
@@ -62,9 +128,16 @@ body::before {
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
+  perspective: 1000px;
 }
 
 .pass {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --glare-x: 50%;
+  --glare-y: 50%;
+
+  position: relative;
   display: flex;
   width: 100%;
   max-width: 760px;
@@ -75,7 +148,29 @@ body::before {
   box-shadow:
     0 40px 80px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(255, 255, 255, 0.06);
+  transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.2s ease-out;
+  will-change: transform;
   animation: pass-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Shiny glare that follows the mouse */
+.pass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--glare-x) var(--glare-y),
+    rgba(255, 255, 255, 0.35),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.pass:hover::after {
+  opacity: 1;
 }
 
 .pass-main {
@@ -344,11 +439,13 @@ body::before {
 @keyframes pass-in {
   from {
     opacity: 0;
-    transform: translateY(40px) rotate(-2deg);
+    translate: 0 40px;
+    rotate: -2deg;
   }
   to {
     opacity: 1;
-    transform: none;
+    translate: 0 0;
+    rotate: 0deg;
   }
 }
 
@@ -410,5 +507,9 @@ body::before {
 
   html {
     scroll-behavior: auto;
+  }
+
+    .bg-blob {
+    animation: none;
   }
 }
