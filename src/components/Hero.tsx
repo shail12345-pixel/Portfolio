@@ -1,91 +1,99 @@
-import { useRef } from 'react'
-import type { MouseEvent } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+// The things that get typed out, one after another. Keep them true.
+const PHRASES = [
+  'programs VEX robots.',
+  'builds web apps.',
+  'competes in CyberPatriot.',
+  'plays drums.',
+]
 
-function Hero() {
-  const passRef = useRef<HTMLDivElement>(null)
+function Typewriter() {
+  const [text, setText] = useState('')
+  const [index, setIndex] = useState(0)
+  const [deleting, setDeleting] = useState(false)
 
-  function handleMove(e: MouseEvent<HTMLDivElement>) {
-    const pass = passRef.current
-    if (!pass) return
+  useEffect(() => {
+    const phrase = PHRASES[index]
 
-    // Skip the effect for people who turned off motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let delay = deleting ? 35 : 70 // typing speed, deleting is faster
+    if (!deleting && text === phrase) delay = 1600 // pause on the full phrase
+    if (deleting && text === '') delay = 300 // short pause before the next one
 
-    const rect = pass.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width
-    const y = (e.clientY - rect.top) / rect.height
+    const timer = setTimeout(() => {
+      if (!deleting && text === phrase) {
+        setDeleting(true)
+      } else if (deleting && text === '') {
+        setDeleting(false)
+        setIndex((index + 1) % PHRASES.length)
+      } else {
+        setText(phrase.slice(0, text.length + (deleting ? -1 : 1)))
+      }
+    }, delay)
 
-    const tiltX = (0.5 - y) * 14
-    const tiltY = (x - 0.5) * 14
-
-    pass.style.setProperty('--tilt-x', `${tiltX}deg`)
-    pass.style.setProperty('--tilt-y', `${tiltY}deg`)
-    pass.style.setProperty('--glare-x', `${x * 100}%`)
-    pass.style.setProperty('--glare-y', `${y * 100}%`)
-  }
-
-  function handleLeave() {
-    const pass = passRef.current
-    if (!pass) return
-    pass.style.setProperty('--tilt-x', '0deg')
-    pass.style.setProperty('--tilt-y', '0deg')
-  }
+    return () => clearTimeout(timer)
+  }, [text, deleting, index])
 
   return (
-    <div className="hero">
-      
-      <div
-        className="pass"
-        ref={passRef}
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
-      >
-        <div className="pass-main">
-          <p className="pass-label">Boarding Pass</p>
-          <h1 className="pass-name">Sahil Indoria</h1>
-          <p className="pass-intro">
-            Avid coder, builder, and explorer, ready for the next adventure that lies ahead
-          </p>
+    <span className="typed">
+      {text}
+      <span className="caret" aria-hidden="true">|</span>
+    </span>
+  )
+}
 
-          <div className="pass-route">
-            <div className="pass-city">
-              <span className="pass-small">From</span>
-              <span className="pass-code">NJ</span>
-              <span className="pass-small">Rockaway</span>
-            </div>
-            <div className="pass-flight">
-              <span className="pass-plane">✈</span>
-            </div>
-            <div className="pass-city pass-city-end">
-              <span className="pass-small">To</span>
-              <span className="pass-code">???</span>
-              <span className="pass-small">Wherever's next</span>
-            </div>
-          </div>
+function Hero() {
+  const titleRef = useRef<HTMLHeadingElement>(null)
 
-          <div className="pass-details">
-            <div>
-              <span className="pass-small">Gate</span>
-              <span>CS / Cyber</span>
-            </div>
-            <div>
-              <span className="pass-small">Class</span>
-              <span>2029</span>
-            </div>
-            <div>
-              <span className="pass-small">Seat</span>
-              <span>4610T</span>
-            </div>
-          </div>
-        </div>
+  useEffect(() => {
+    const title = titleRef.current
+    if (!title) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-        <div className="pass-stub">
-          <a href="https://github.com/shail12345-pixel">GitHub</a>
-          <a href="mailto:sahil.indoria@gmail.com">Email</a>
-        </div>
-      </div>
-    </div>
+    let targetX = 0.5
+    let targetY = 0.5
+    let x = 0.5
+    let y = 0.5
+    let frame = 0
+
+    const onMove = (e: MouseEvent) => {
+      targetX = e.clientX / window.innerWidth
+      targetY = e.clientY / window.innerHeight
+    }
+
+    const animate = () => {
+      x += (targetX - x) * 0.08
+      y += (targetY - y) * 0.08
+
+      // Move the shine across the letters and tilt them toward the mouse
+      title.style.setProperty('--mx', `${x * 100}%`)
+      title.style.setProperty('--my', `${y * 100}%`)
+      title.style.transform = `rotateX(${(0.5 - y) * 10}deg) rotateY(${(x - 0.5) * 14}deg)`
+
+      frame = requestAnimationFrame(animate)
+    }
+
+    window.addEventListener('mousemove', onMove)
+    frame = requestAnimationFrame(animate)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('mousemove', onMove)
+    }
+  }, [])
+
+  return (
+    <section className="hero" id="top">
+      <h1 className="hero-title" ref={titleRef}>
+        Hi, I'm Sahil.
+      </h1>
+      <p className="hero-sub">
+        16-year-old developer from New Jersey who <Typewriter />
+      </p>
+      <a className="hero-scroll" href="#projects">
+        Scroll ↓
+      </a>
+    </section>
   )
 }
 

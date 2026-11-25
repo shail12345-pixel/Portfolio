@@ -1,18 +1,17 @@
 import Background from './components/Background'
-import Journey from './components/Journey'
+import Hero from './components/Hero'
 import Projects from './components/Projects'
 
 function App() {
   return (
     <>
-    <Background />
-    <main>
-      <Journey />
-      <Projects />
-    </main>
-  </>
+      <Background />
+      <main>
+        <Hero />
+        <Projects />
+      </main>
+    </>
   )
 }
-
 
 export default App

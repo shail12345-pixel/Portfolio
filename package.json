@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "cobe": "^0.6.3",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
